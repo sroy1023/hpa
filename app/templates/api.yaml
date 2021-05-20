@@ -37,7 +37,7 @@ spec:
           image: hpa_fastapi:latest
           ports:
             - containerPort: 8080
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           resources:
             # You must specify requests for CPU to autoscale
             # based on CPU utilization
