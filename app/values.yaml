@@ -1,0 +1,10 @@
+replicaCount: 1
+
+image:
+  repository: hpa_fastapi
+  tag: latest
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
