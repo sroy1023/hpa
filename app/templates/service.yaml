@@ -3,11 +3,10 @@ kind: Service
 metadata:
   name: hpa-api-svc
 spec:
-  type: LoadBalancer
-  ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
   selector:
     app: hpa-api
-    
+  ports:
+    - protocol: "TCP"
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer
