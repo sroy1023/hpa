@@ -14,32 +14,14 @@ spec:
       labels:
         app: hpa-api
     spec:
-    {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-    {{- end }}
-    #     serviceAccountName: {{ template "myhpa.serviceAccountName" . }}
-    #  securityContext:
-    #   {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: hpa-api
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: hpa_fastapi:latest
-          imagePullPolicy: Always
           ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            - containerPort: 8080
+          imagePullPolicy: Always
           resources:
+            # You must specify requests for CPU to autoscale
+            # based on CPU utilization
             requests:
               cpu: "250m"
-     
