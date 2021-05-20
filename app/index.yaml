@@ -3,11 +3,11 @@ entries:
   app:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-05-20T11:38:00.369163939Z"
+    created: "2021-05-20T11:41:45.382372798Z"
     description: A Helm chart for Kubernetes
-    digest: ea8eef265911bde8717a7fd10abc9a2ce6f44354d12f9e52492773cbea974380
+    digest: 017b814513b5c97cba5dbed728820e989fd43c82521589ede560d66329e7c647
     name: app
     urls:
     - app-0.1.0.tgz
     version: 0.1.0
-generated: "2021-05-20T11:38:00.368658973Z"
+generated: "2021-05-20T11:41:45.381099353Z"
