@@ -18,9 +18,9 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-      serviceAccountName: {{ template "myhpa.serviceAccountName" . }}
-      securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+    #     serviceAccountName: {{ template "myhpa.serviceAccountName" . }}
+    #  securityContext:
+    #   {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: hpa-api
           securityContext:
