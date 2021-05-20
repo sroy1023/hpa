@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: hpa_fastapi
-  tag: latest
+  repository: 4oh4/kubernetes-fastapi
+  tag: 1.0.0
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []

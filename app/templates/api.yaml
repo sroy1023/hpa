@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: kf-api
-          image: hpa_fastapi:latest
+          image: 4oh4/kubernetes-fastapi:1.0.0
           ports:
             - containerPort: 8080
           imagePullPolicy: IfNotPresent
