@@ -3,10 +3,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kf-api-svc
+  name: fast-api-svc
 spec:
   selector:
-    app: kf-api
+    app: fast-api
   ports:
     - protocol: "TCP"
       port: 8080
@@ -19,21 +19,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kf-api
+  name: fast-api
   labels:
-    app: kf-api
+    app: fast-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kf-api
+      app: fast-api
   template:
     metadata:
       labels:
-        app: kf-api
+        app: fast-api
     spec:
       containers:
-        - name: kf-api
+        - name: fast-api
           image: 4oh4/kubernetes-fastapi:1.0.0
           ports:
             - containerPort: 8080
