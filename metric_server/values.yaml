@@ -62,7 +62,10 @@ command: ["metrics-server"]
 ## ref: https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md#flags
 ##
 ## extraArgs:
-##   kubelet-insecure-tls: true
+
+
+kubelet-insecure-tls: true
+
 ##   kubelet-preferred-address-types: InternalIP
 ##
 extraArgs: {}
