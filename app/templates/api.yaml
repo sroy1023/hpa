@@ -43,6 +43,7 @@ spec:
           resources:
             # You must specify requests for CPU to autoscale
             # based on CPU utilization
+            limits:
+              cpu: "100m"
             requests:
-              cpu: "250m"
-
+              cpu: "100m"
