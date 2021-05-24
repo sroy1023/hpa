@@ -1,17 +1,17 @@
+# Default values for metric_server.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
 replicaCount: 1
 
 image:
-  repository: k8s.gcr.io/metrics-server/metrics-server
-  tag: v0.4.4
+  repository: nginx
+  tag: stable
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-
-
-
-
 
 rbac:
   ## Specifies whether RBAC rules should be created
@@ -53,196 +53,56 @@ securePort: 8443
 # if you use Weave network on EKS
 hostNetwork: true
 
-
-
-## Container command (using container default if not set)
-command: ["metrics-server"]
-
-## Extra arguments to pass to the metrics-server
-## ref: https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md#flags
-##
-## extraArgs:
-
-
+extraArgs:
+       
 kubelet-insecure-tls: true
-
 ##   kubelet-preferred-address-types: InternalIP
-##
-extraArgs: {}
+  # The name of the service account to use.
+  # If not set and create is true, a n
 
-## Pod labels
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-##
-podLabels: {}
+podSecurityContext: {}
+  # fsGroup: 2000
 
-## Additional pod annotations for MariaDB Galera pods
-## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-##
-podAnnotations: {}
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
 
-## Priority class for pod scheduling
-## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
-# priorityClassName: myPriorityClassName
-
-## Pod affinity preset
-## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-## Allowed values: soft, hard
-##
-podAffinityPreset: ""
-
-## Pod anti-affinity preset
-## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
-## Allowed values: soft, hard
-##
-podAntiAffinityPreset: soft
-
-## Pod disruption budget
-# https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets
-podDisruptionBudget:
-  enabled: false
-  minAvailable:
-  maxUnavailable:
-
-## Node affinity preset
-## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
-## Allowed values: soft, hard
-##
-nodeAffinityPreset:
-  ## Node affinity type
-  ## Allowed values: soft, hard
-  ##
-  type: ""
-  ## Node label key to match
-  ## E.g.
-  ## key: "kubernetes.io/e2e-az-name"
-  ##
-  key: ""
-  ## Node label values to match
-  ## E.g.
-  ## values:
-  ##   - e2e-az1
-  ##   - e2e-az2
-  ##
-  values: []
-
-## Affinity for pod assignment. Evaluated as a template.
-## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-## Note: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
-##
-affinity: {}
-
-## Topology Spread Constraints. Evaluated as a template.
-## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints
-##
-topologySpreadConstraints: []
-
-## Node labels for pod assignment. Evaluated as a template.
-## ref: https://kubernetes.io/docs/user-guide/node-selection/
-##
-nodeSelector: {}
-
-## Tolerations for pod assignment. Evaluated as a template.
-## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-##
-tolerations: []
-
-##  Metrics Server K8s svc properties
-##
 service:
-  ## Kubernetes service type and port number
-  ##
   type: ClusterIP
-  port: 443
+  port: 80
 
-  ## Specify the nodePort value for the LoadBalancer and NodePort service types.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
-  ##
-  # nodePort: 30001
-
-  ## Set the LoadBalancer service type to internal only.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
-  ##
-  # loadBalancerIP:
-
-  ## Provide any additional annotations which may be required. This can be used to
-  ## set the LoadBalancer service type to internal only.
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
-  ##
+ingress:
+  enabled: false
   annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: []
 
-  ## Provide any additional labels which may be required. This can be used to
-  ## have metrics-server show up in `kubectl cluster-info`
-  ##  kubernetes.io/cluster-service: "true"
-  ##  kubernetes.io/name: "Metrics-server"
-  ##
-  labels: {}
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
-## Metric Server containers' resource requests and limits
-## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-##
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits: {}
-  #   cpu: 250m
-  #   memory: 256Mi
-  requests: {}
-  #   cpu: 250m
-  #   memory: 256Mi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
-## Configure extra options for liveness and readiness probes
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
-##
-livenessProbe:
-  enabled: true
-  failureThreshold: 3
-  httpGet:
-    path: /livez
-    port: https
-    scheme: HTTPS
-  periodSeconds: 10
-readinessProbe:
-  enabled: true
-  failureThreshold: 3
-  httpGet:
-    path: /readyz
-    port: https
-    scheme: HTTPS
-  periodSeconds: 10
+nodeSelector: {}
 
-## Custom Liveness probes for metrics-server
-##
-customLivenessProbe: {}
+tolerations: []
 
-## Custom Readiness probes metrics-server
-##
-customReadinessProbe: {}
-
-## Container security context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-##
-containerSecurityContext:
-  enabled: true
-  readOnlyRootFilesystem: false
-  runAsNonRoot: true
-  # allowPrivilegeEscalation: false
-  # capabilities:
-  #   drop: ["ALL"]
-
-## Pod security context
-## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-##
-podSecurityContext:
-  enabled: false
-
-## Extra volumes to mount
-## Example Use Case: mount an `emptyDir` to allow running with a `readOnlyRootFilesystem: true`
-#  extraVolumes:
-#  - name: tmpdir
-#    emptyDir: {}
-#
-#  extraVolumeMounts:
-#  - name: tmpdir
-#    mountPath: /tmp
+affinity: {}
