@@ -5,9 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
+  repository: k8s.gcr.io/metrics-server/metrics-server
+  tag: v0.4.4
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""

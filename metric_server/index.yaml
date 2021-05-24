@@ -3,11 +3,11 @@ entries:
   metric_server:
   - apiVersion: v1
     appVersion: "1.0"
-    created: "2021-05-24T13:20:46.29656977Z"
+    created: "2021-05-24T14:04:43.711013637Z"
     description: A Helm chart for Kubernetes
-    digest: 995add25d64490cc04fe59bf1a377c2f447282ed24fabd2084816c88d5383f64
+    digest: 68d812e9738ee90cf23c4ecf3c29f4ae776084649a6a0942be5a08e401db531f
     name: metric_server
     urls:
     - metric_server-0.1.0.tgz
     version: 0.1.0
-generated: "2021-05-24T13:20:46.295621328Z"
+generated: "2021-05-24T14:04:43.710308292Z"
